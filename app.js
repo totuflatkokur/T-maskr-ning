@@ -359,12 +359,13 @@ async function resetPin(id){
   await refreshAll();
 }
 
-async function editEmployee(id){
+async async function editEmployee(id){
   const emp = employees.find(e => e.id === id);
   if(!emp) return toast("Starfsmaður fannst ekki");
 
   const newName = prompt("Nýtt nafn:", emp.name);
-  if(!newName || !newName.trim()) return;
+  if(newName === null) return;
+  if(!newName.trim()) return toast("Nafn má ekki vera tómt");
 
   const newPin = prompt("Nýtt PIN, skildu eftir tómt ef PIN á ekki að breytast:");
 
@@ -372,20 +373,26 @@ async function editEmployee(id){
     name: newName.trim()
   };
 
-  if(newPin && newPin.trim()){
+  if(newPin !== null && newPin.trim() !== ""){
     updateData.pin_hash = await hashPin(newPin.trim());
     updateData.pin_code = null;
   }
 
-  const {error} = await db
+  const { data, error } = await db
     .from("employees")
     .update(updateData)
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if(error){
-    console.error(error);
+    console.error("Villa við breytingu:", error);
+    alert(error.message);
     return toast("Villa við að breyta starfsmanni");
   }
+
+  toast("Starfsmanni breytt");
+  await refreshAll();
+}}
 
   toast("Starfsmanni breytt");
   await refreshAll();
