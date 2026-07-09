@@ -318,13 +318,12 @@ function renderAdmin(){
       <div class="item ${e.active===false?'off':''}">
         <div>
           <b>${e.name}</b><br>
-          <span class="muted">${e.active===false?'Óvirkur':'Virkur'} · ${currentOpenEntry(e.id)?'Í vinnu':'Ekki í vinnu'}</span>
-        </div>
-        <div>
-          <button class="secondary mini" onclick="resetPin('${e.id}')">PIN</button>
+          <span class="muted">${e.active===false?'Óvirkur':'Virkur'} · ${currentOpenEntry(e.id)?'Í vinnu':'Ekki í vinnu'}</s
           <button class="secondary mini" onclick="toggleEmployee('${e.id}', ${e.active!==false})">${e.active===false?'Virkja':'Óvirkja'}</button>
           <button class="danger mini" onclick="deleteEmployee('${e.id}')">Eyða</button>
-        </div>
+        <button class="secondary mini" onclick="editEmployee('${e.id}')">Breyta</button>
+<button class="secondary mini" onclick="resetPin('${e.id}')">PIN</button>
+        
       </div>
     `).join("")
     : `<span class="pill">Engir starfsmenn</span>`;
