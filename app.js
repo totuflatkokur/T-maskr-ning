@@ -273,7 +273,37 @@ function monthlySummary(){
     };
   });
 }
+async function editEmployee(id){
+  const emp = employees.find(e => e.id === id);
+  if(!emp) return toast("Starfsmaður fannst ekki");
 
+  const newName = prompt("Nýtt nafn:", emp.name);
+  if(!newName || !newName.trim()) return;
+
+  const newPin = prompt("Nýtt PIN, skildu eftir tómt ef PIN á ekki að breytast:");
+
+  const updateData = {
+    name: newName.trim()
+  };
+
+  if(newPin && newPin.trim()){
+    updateData.pin_hash = await hashPin(newPin.trim());
+    updateData.pin_code = null;
+  }
+
+  const { error } = await db
+    .from("employees")
+    .update(updateData)
+    .eq("id", id);
+
+  if(error){
+    console.error(error);
+    return toast("Villa við að breyta starfsmanni");
+  }
+
+  toast("Starfsmanni breytt");
+  await refreshAll();
+}
 function renderAdmin(){
   const summary = monthlySummary();
   const working = employees.filter(e=>currentOpenEntry(e.id)).length;
