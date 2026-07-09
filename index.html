@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="is">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Tótu Stimpilklukka v2</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <div id="toast" class="toast hidden"></div>
+
+  <main class="app">
+    <header class="hero">
+      <div class="logo">Tótu<br><small>Stimpilklukka</small></div>
+      <h1>Tótu Stimpilklukka</h1>
+      <p>V2.0 · hreint og einfalt</p>
+    </header>
+
+    <nav class="nav">
+      <button class="navBtn active" data-page="clock">⏰ Stimpilklukka</button>
+      <button class="navBtn" data-page="admin">👨‍💼 Stjórnandi</button>
+    </nav>
+
+    <section id="page-clock" class="page">
+      <div class="card">
+        <h2>Stimpla inn / út</h2>
+
+        <label>Starfsmaður</label>
+        <select id="employeeSelect"></select>
+
+        <label>PIN</label>
+        <input id="pinInput" type="password" inputmode="numeric" maxlength="8" placeholder="Sláðu inn PIN" />
+
+        <button id="loginBtn">Skrá inn</button>
+
+        <div id="employeePanel" class="hidden">
+          <h2 id="employeeName"></h2>
+          <div id="employeeStatus" class="statusBox"></div>
+
+          <button id="clockInBtn" class="green">🟢 Mæta</button>
+          <button id="clockOutBtn" class="orange">🔴 Fara heim</button>
+          <button id="logoutBtn" class="secondary">Útskrá</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🟢 Í vinnu núna</h2>
+        <div id="workingNowList"></div>
+      </div>
+    </section>
+
+    <section id="page-admin" class="page hidden">
+      <div id="adminLogin" class="card">
+        <h2>Stjórnandi</h2>
+        <input id="adminPassword" type="password" placeholder="Lykilorð stjórnanda" />
+        <button id="adminLoginBtn">Innskrá</button>
+      </div>
+
+      <div id="adminPanel" class="hidden">
+        <div class="card">
+          <h2>Yfirlit</h2>
+          <div class="stats">
+            <div class="stat"><span>Starfsmenn</span><b id="statEmployees">0</b></div>
+            <div class="stat"><span>Í vinnu</span><b id="statWorking">0</b></div>
+            <div class="stat"><span>Klst í mánuði</span><b id="statMonthHours">0</b></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>👥 Starfsmenn</h2>
+          <input id="newEmployeeName" placeholder="Nafn starfsmanns" />
+          <input id="newEmployeePin" inputmode="numeric" maxlength="8" placeholder="PIN" />
+          <button id="addEmployeeBtn">Bæta við starfsmanni</button>
+          <div id="employeesList"></div>
+        </div>
+
+        <div class="card">
+          <h2>📊 Mánaðaryfirlit</h2>
+          <div class="row">
+            <select id="monthSelect"></select>
+            <select id="yearSelect"></select>
+          </div>
+          <button id="refreshBtn" class="secondary">Endurhlaða</button>
+          <button id="payrollCsvBtn" class="secondary">Launa CSV</button>
+          <button id="backupBtn" class="secondary">Backup</button>
+          <div id="monthlyList"></div>
+        </div>
+
+        <div class="card">
+          <h2>📅 Dagsskýrsla</h2>
+          <input id="dayReportDate" type="date" />
+          <button id="dayReportBtn" class="secondary">Sækja dag</button>
+          <div id="dayReportList"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

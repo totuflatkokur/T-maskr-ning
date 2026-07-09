@@ -1,0 +1,8 @@
+{
+  "name": "Tótu Stimpilklukka",
+  "short_name": "Stimpilklukka",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#07182f",
+  "theme_color": "#0b9cff"
+}
